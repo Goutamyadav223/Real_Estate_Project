@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.StudentDemo.Entity.Student;
 import com.example.StudentDemo.StudentService.StudentService;
@@ -43,8 +42,8 @@ public class StudentController {
 	@PostMapping("/login")
 	public String login(@ModelAttribute Student student,Model model) {
 		Student s=studentService.login(student);
-		model.addAttribute("student",student);
-		return "Home";
+		model.addAttribute("student",s);
+		return "profile";
 	}
 	
 	
