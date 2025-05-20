@@ -7,89 +7,153 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            margin: 0; padding: 0;
+            background-color: #f4f4f4;
         }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #003366;
+            overflow: hidden;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: #ddd;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background-color: #0059b3;
+            color: white;
+        }
+
+        /* Login Container */
         .login-container {
-            width: 300px;
-            margin: 100px auto;
-            padding: 25px;
+            width: 350px;
+            margin: 80px auto;
+            padding: 30px;
             background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
             position: relative;
         }
-        .registration-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+
+        .login-container h2 {
+            text-align: center;
+            color: #003366;
         }
-        .registration-button form {
-            display: inline;
+
+        label {
+            font-weight: bold;
         }
-        .registration-button input[type="submit"] {
-            width: auto;
-            padding: 5px 12px;
-            font-size: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .registration-button input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+
         input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
-            margin: 10px 0 15px 0;
+            margin: 8px 0 16px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
         input[type="submit"] {
             width: 100%;
-            background-color: #4CAF50;
+            background-color: #004080;
             color: white;
-            padding: 10px;
+            padding: 12px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
+        input[type="submit"]:hover {
+            background-color: #0066cc;
+        }
+
+        .registration-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+		.registration-button input[type="submit"] {
+		    padding: 6px 14px;
+		    font-size: 12px;
+		    background-color: #004080;
+		    color: white;
+		    border: none;
+		    border-radius: 5px;
+		    font-weight: bold;
+		    cursor: pointer;
+		    transition: background-color 0.3s ease;
+		}
+
+		.registration-button input[type="submit"]:hover {
+		    background-color: #0066cc;
+		}
+
         .error {
             color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #003366;
+            color: #ccc;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Login Form -->
-    <div class="login-container">
-        
-        <!-- Registration Button at the top-right inside the form box -->
-        <div class="registration-button">
-            <form action="registerPage" method="get">
-                <input type="submit" value="Register" />
-            </form>
-        </div>
+<!-- Navigation -->
+<nav>
+    <a href="${pageContext.request.contextPath}/home">Home</a>
+</nav>
 
-        <h2>Login</h2>
-        <form action="login" method="post">
-            <label for="username">Username</label>
-            <input type="text" id="userName" name="username" required>
+<!-- Login Form -->
+<div class="login-container">
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-
-            <input type="submit" value="Login">
-
-            <% 
-                String errorMessage = (String) request.getAttribute("error");
-                if (errorMessage != null) {
-            %>
-                <p class="error"><%= errorMessage %></p>
-            <% } %>
+    <!-- Register Button -->
+    <div class="registration-button">
+        <form action="${pageContext.request.contextPath}/registration" method="get">
+            <input type="submit" value="Register" />
         </form>
     </div>
+
+    <h2>Login</h2>
+    <form action="${pageContext.request.contextPath}/user/get" method="post">
+        <label for="username">Username</label>
+        <input type="text" id="userName" name="userName" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Login">
+
+        <% 
+            String errorMessage = (String) request.getAttribute("error");
+            if (errorMessage != null) {
+        %>
+            <p class="error"><%= errorMessage %></p>
+        <% } %>
+    </form>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

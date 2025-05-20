@@ -6,30 +6,53 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
 
+        /* Navigation Bar */
+        nav {
+            background-color: #003366;
+            overflow: hidden;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: #ddd;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background-color: #0059b3;
+            color: white;
+        }
+
+        /* Registration Container */
         .registration-container {
             width: 400px;
-            margin: 100px auto;
-            padding: 25px;
+            margin: 80px auto;
+            padding: 30px;
             background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
             position: relative;
         }
 
         .registration-container h2 {
             text-align: center;
-            margin-bottom: 20px;
+            color: #003366;
         }
 
         label {
+            font-weight: bold;
+            color: #004080;
             display: block;
             margin-top: 10px;
-            font-weight: bold;
         }
 
         input[type="text"], input[type="password"], input[type="number"] {
@@ -43,22 +66,25 @@
 
         input[type="submit"] {
             width: 100%;
-            background-color: #4CAF50;
+            background-color: #004080;
             color: white;
-            padding: 10px;
+            padding: 12px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #0066cc;
         }
 
+        /* Login Button on top right */
         .login-button {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
         }
 
         .login-button form {
@@ -66,18 +92,19 @@
         }
 
         .login-button input[type="submit"] {
-            width: auto;
-            padding: 5px 12px;
+            padding: 6px 14px;
             font-size: 12px;
-            background-color: #4CAF50;
+            background-color: #004080;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .login-button input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #0066cc;
         }
 
         .error {
@@ -89,41 +116,57 @@
             color: green;
             text-align: center;
         }
+
+        /* Footer */
+        footer {
+            background-color: #003366;
+            color: #ccc;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="registration-container">
+<!-- Navigation -->
+<nav>
+    <a href="${pageContext.request.contextPath}/home">Home</a>
+</nav>
 
-        <!-- Top-right Login Button inside the box -->
-        <div class="login-button">
-            <form action="loginPage" method="get">
-                <input type="submit" value="Login" />
-            </form>
-        </div>
+<!-- Registration Form -->
+<div class="registration-container">
 
-        <h2>Registration Form</h2>
-
-        <form action="registration" method="post">
-
-            <label for="id">ID</label>
-            <input type="number" id="id" name="id" required>
-
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="userName">Username</label>
-            <input type="text" id="userName" name="userName" required>
-
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-
-            <input type="submit" value="Register" />
-
-           
-
+    <!-- Login Button -->
+    <div class="login-button">
+        <form action="login" method="get">
+            <input type="submit" value="Login" />
         </form>
     </div>
+
+    <h2>Registration Form</h2>
+
+	<form action="${pageContext.request.contextPath}/user/create" method="post">
+
+	    <label for="name">Name</label>
+	    <input type="text" id="name" name="name" required>
+
+	    <label for="userName">Username</label>
+	    <input type="text" id="userName" name="userName" required>
+
+	    <label for="password">Password</label>
+	    <input type="password" id="password" name="password" required>
+
+	    <input type="submit" value="Register" />
+
+	</form>
+
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

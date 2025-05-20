@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Profile - DreamHome</title>
+    <title>Welcome to DreamHome</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,11 +19,11 @@
         }
 
         nav a {
-            float: left;
             color: white;
             text-decoration: none;
             padding: 12px 16px;
             font-weight: bold;
+            display: inline-block;
         }
 
         nav a:hover {
@@ -31,14 +31,18 @@
             color: #fff;
         }
 
-        nav::after {
-            content: "";
-            display: table;
-            clear: both;
+        .left-nav {
+            float: left;
         }
 
         .right-nav {
             float: right;
+        }
+
+        nav::after {
+            content: "";
+            display: table;
+            clear: both;
         }
 
         .welcome {
@@ -55,39 +59,40 @@
             margin: 30px;
         }
 
-        .profile-card {
+        .property-card {
             background-color: white;
             border: 1px solid #ccc;
             border-radius: 10px;
-            width: 350px;
+            width: 300px;
             margin: 15px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            padding: 20px;
+            transition: transform 0.3s ease;
         }
 
-        .profile-card h3 {
+        .property-card:hover {
+            transform: scale(1.03);
+        }
+
+        .property-card img {
+            width: 100%;
+            height: 180px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            object-fit: cover;
+        }
+
+        .property-info {
+            padding: 15px;
+        }
+
+        .property-info h3 {
+            margin: 0;
             color: #004080;
-            margin-bottom: 10px;
         }
 
-        .profile-card p {
-            margin: 6px 0;
+        .property-info p {
+            margin: 5px 0;
             color: #333;
-        }
-
-        .button {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 14px;
-            background-color: #004080;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-        }
-
-        .button:hover {
-            background-color: #0059b3;
         }
 
         footer {
@@ -106,13 +111,10 @@
 
 <!-- Navigation Bar -->
 <nav>
-    <!-- Left-side links -->
-    <div>
+    <div class="left-nav">
         <a href="${pageContext.request.contextPath}/LandingPage">Home</a>
         <a href="${pageContext.request.contextPath}/property/add">Add Property</a>
     </div>
-
-    <!-- Right-side link -->
     <div class="right-nav">
         <a href="${pageContext.request.contextPath}/profile">My Profile</a>
     </div>
@@ -120,41 +122,30 @@
 
 <!-- Welcome Message -->
 <div class="welcome">
-    Welcome, ${sessionScope.userName} to Your Profile!
+    Welcome, ${sessionScope.userName} to DreamHome!
 </div>
 
-<!-- Profile Details Section -->
+<!-- Sample Properties -->
 <div class="card-container">
-
-    <!-- Personal Information -->
-    <div class="profile-card">
-        <h3>Your Information</h3>
-        <p><strong>Name:</strong> ${sessionScope.name}</p>
-        <p><strong>Email:</strong> ${sessionScope.email}</p>
-        <p><strong>Username:</strong> ${sessionScope.userName}</p>
-        <a href="${pageContext.request.contextPath}/editProfile" class="button">Edit Profile</a>
+    <div class="property-card">
+        <img src="https://via.placeholder.com/300x180" alt="Property Image">
+        <div class="property-info">
+            <h3>3 BHK Apartment</h3>
+            <p>Location: New Delhi</p>
+            <p>Price: ₹75 Lakhs</p>
+        </div>
     </div>
 
-    <!-- Posted Properties -->
-    <div class="profile-card">
-        <h3>Your Listings</h3>
-        <p>You have <strong>${sessionScope.listingCount}</strong> active property listings.</p>
-        <a href="${pageContext.request.contextPath}/myProperties" class="button">View My Properties</a>
+    <div class="property-card">
+        <img src="https://via.placeholder.com/300x180" alt="Property Image">
+        <div class="property-info">
+            <h3>2 BHK Flat</h3>
+            <p>Location: Mumbai</p>
+            <p>Price: ₹1.2 Crore</p>
+        </div>
     </div>
 
-    <!-- Saved Properties -->
-    <div class="profile-card">
-        <h3>Saved Properties</h3>
-        <p>You have <strong>${sessionScope.savedCount}</strong> saved properties.</p>
-        <a href="${pageContext.request.contextPath}/wishlist" class="button">View Wishlist</a>
-    </div>
-
-    <!-- Change Password -->
-    <div class="profile-card">
-        <h3>Account Security</h3>
-        <a href="${pageContext.request.contextPath}/changePassword" class="button">Change Password</a>
-    </div>
-
+    <!-- Add more cards dynamically here later -->
 </div>
 
 <!-- Footer -->
