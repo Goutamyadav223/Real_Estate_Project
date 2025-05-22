@@ -16,6 +16,11 @@ public class ViewController {
 		return "LandingPage";
 	 }
 	
+	@GetMapping("/AddProperty")
+	public String addProperty() {
+		return "AddProperty";
+	}
+	
 	@GetMapping("/profile")
 	 	public String profilePage() {
 		return "profile";

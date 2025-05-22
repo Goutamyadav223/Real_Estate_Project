@@ -113,7 +113,7 @@
 <nav>
     <div class="left-nav">
         <a href="${pageContext.request.contextPath}/LandingPage">Home</a>
-        <a href="${pageContext.request.contextPath}/property/add">Add Property</a>
+        <a href="${pageContext.request.contextPath}/AddProperty">Add Property</a>
     </div>
     <div class="right-nav">
         <a href="${pageContext.request.contextPath}/profile">My Profile</a>

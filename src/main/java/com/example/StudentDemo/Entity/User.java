@@ -19,17 +19,14 @@ public class User {
 	@Column
 	private String password;
 	
-	@Column
+	@Column(unique = true) 
 	private String userName;
 
-	
-	
+
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
 
 	public User(Integer id, String name, String password, String userName) {
 		super();

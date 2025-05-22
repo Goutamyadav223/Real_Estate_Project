@@ -109,7 +109,7 @@
     <!-- Left-side links -->
     <div>
         <a href="${pageContext.request.contextPath}/LandingPage">Home</a>
-        <a href="${pageContext.request.contextPath}/property/add">Add Property</a>
+        <a href="${pageContext.request.contextPath}/AddProperty">Add Property</a>
     </div>
 
     <!-- Right-side link -->
