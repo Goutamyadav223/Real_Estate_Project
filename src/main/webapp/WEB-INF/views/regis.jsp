@@ -1,171 +1,238 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Registration</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <title>User Registration | DreamHome Real Estate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        /* Navigation Bar */
-        nav {
-            background-color: #003366;
-            overflow: hidden;
-        }
+  <!-- Font and Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
-        nav a {
-            float: left;
-            display: block;
-            color: #ddd;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+  <style>
+    :root {
+      --primary: #003366;
+      --light: #f9fafc;
+      --white: #ffffff;
+      --error: #ff4d4d;
+    }
 
-        nav a:hover {
-            background-color: #0059b3;
-            color: white;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
 
-        /* Registration Container */
-        .registration-container {
-            width: 400px;
-            margin: 80px auto;
-            padding: 30px;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            position: relative;
-        }
+    body {
+      background: var(--light);
+      color: var(--primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .registration-container h2 {
-            text-align: center;
-            color: #003366;
-        }
+    nav {
+      background: var(--primary);
+      padding: 20px 40px;
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
 
-        label {
-            font-weight: bold;
-            color: #004080;
-            display: block;
-            margin-top: 10px;
-        }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
 
-        input[type="text"], input[type="password"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+    nav a:hover {
+      background: white;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
 
-        input[type="submit"] {
-            width: 100%;
-            background-color: #004080;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    .registration-container {
+      margin: 120px auto 60px;
+      padding: 40px 35px;
+      background-color: var(--white);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+    }
 
-        input[type="submit"]:hover {
-            background-color: #0066cc;
-        }
+    .registration-container h2 {
+      color: var(--primary);
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
 
-        /* Login Button on top right */
-        .login-button {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-        }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #222;
+    }
 
-        .login-button form {
-            display: inline;
-        }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
 
-        .login-button input[type="submit"] {
-            padding: 6px 14px;
-            font-size: 12px;
-            background-color: #004080;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    input[type="submit"] {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-        .login-button input[type="submit"]:hover {
-            background-color: #0066cc;
-        }
+    input[type="submit"]:hover {
+      background: #00509E;
+    }
 
-        .error {
-            color: red;
-            text-align: center;
-        }
+    .login-text {
+      margin-top: 20px;
+      text-align: right;
+      font-size: 14px;
+      color: #444;
+      user-select: none;
+    }
 
-        .success {
-            color: green;
-            text-align: center;
-        }
+    .login-text a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(0, 51, 102, 0.1);
+      transition: background 0.3s ease;
+    }
 
-        /* Footer */
-        footer {
-            background-color: #003366;
-            color: #ccc;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 50px;
-        }
-    </style>
+    .login-text a:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .error, .success {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .error {
+      color: var(--error);
+    }
+
+    .success {
+      color: green;
+    }
+
+    footer {
+      background: var(--primary);
+      color: #ccc;
+      text-align: center;
+      padding: 16px 0;
+      font-size: 14px;
+      margin-top: auto;
+    }
+	
+	input[type="file"] {
+	  width: 100%;
+	  padding: 12px;
+	  margin-bottom: 20px;
+	  border: 1px solid #ccc;
+	  border-radius: 8px;
+	  font-size: 15px;
+	  background-color: white;
+	  color: #333;
+	}
+
+
+
+    @media (max-width: 600px) {
+      nav {
+        padding: 15px 25px;
+      }
+
+      nav a {
+        font-size: 13px;
+        padding: 8px 16px;
+      }
+
+      .registration-container {
+        margin: 100px 20px 40px;
+        padding: 30px 25px;
+      }
+
+      .registration-container h2 {
+        font-size: 22px;
+      }
+
+      .login-text {
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Navigation -->
 <nav>
-    <a href="${pageContext.request.contextPath}/home">Home</a>
+  <a href="${pageContext.request.contextPath}/home">Home</a>
 </nav>
 
-<!-- Registration Form -->
 <div class="registration-container">
+  <h2><i class="fas fa-user-plus"></i> Registration Form</h2>
 
-    <!-- Login Button -->
-    <div class="login-button">
-        <form action="login" method="get">
-            <input type="submit" value="Login" />
-        </form>
-    </div>
+  <form action="${pageContext.request.contextPath}/user/create" method="post" enctype="multipart/form-data">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required />
 
-    <h2>Registration Form</h2>
+    <label for="userName">Username</label>
+    <input type="text" id="userName" name="userName" required />
 
-	<form action="${pageContext.request.contextPath}/user/create" method="post">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required />
 
-	    <label for="name">Name</label>
-	    <input type="text" id="name" name="name" required>
 
-	    <label for="userName">Username</label>
-	    <input type="text" id="userName" name="userName" required>
+	<label for="image">Image</label>
+	<input type="file" name="imageFile" id="image" accept="image/*" required />
+    <input type="submit" value="Register" />
+  </form>
 
-	    <label for="password">Password</label>
-	    <input type="password" id="password" name="password" required>
-
-	    <input type="submit" value="Register" />
-
-	</form>
-
+  <div class="login-text">
+    Already registered?
+    <a href="${pageContext.request.contextPath}/login">Login</a>
+  </div>
 </div>
 
-<!-- Footer -->
 <footer>
-    <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
+  <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
 </footer>
 
 </body>

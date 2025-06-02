@@ -1,157 +1,228 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Welcome to DreamHome</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #eef2f3;
-            margin: 0;
-            padding: 0;
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8">
+  <title>Welcome to DreamHome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
 
-        nav {
-            background-color: #003366;
-            overflow: hidden;
-            padding: 10px 20px;
-        }
+    * { box-sizing: border-box; }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 12px 16px;
-            font-weight: bold;
-            display: inline-block;
-        }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafc;
+      color: #003366;
+    }
 
-        nav a:hover {
-            background-color: #0059b3;
-            color: #fff;
-        }
+    nav {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #003366;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
 
-        .left-nav {
-            float: left;
-        }
+    nav .left-nav, nav .right-nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
 
-        .right-nav {
-            float: right;
-        }
+    nav a, nav button {
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 1.5px solid transparent;
+      background: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
 
-        nav::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
+    nav a:hover, nav button:hover {
+      background: white;
+      color: #003366;
+      border-color: #003366;
+    }
 
-        .welcome {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 24px;
-            color: #003366;
-        }
+    nav form {
+      margin: 0;
+    }
 
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 30px;
-        }
+    nav form button {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+    }
 
-        .property-card {
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            width: 300px;
-            margin: 15px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      margin-top: 110px;
+      justify-content: center;
+    }
 
-        .property-card:hover {
-            transform: scale(1.03);
-        }
+    .property-post {
+      width: 100%;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+	.property-post {
+	  cursor: pointer;
+	}
 
-        .property-card img {
-            width: 100%;
-            height: 180px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            object-fit: cover;
-        }
 
-        .property-info {
-            padding: 15px;
-        }
+    .property-user {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
 
-        .property-info h3 {
-            margin: 0;
-            color: #004080;
-        }
+    .user-avatar img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
 
-        .property-info p {
-            margin: 5px 0;
-            color: #333;
-        }
+    .user-name {
+      margin-left: 10px;
+      font-weight: 600;
+      color: #003366;
+    }
 
-        footer {
-            background-color: #003366;
-            color: #ccc;
-            text-align: center;
-            padding: 15px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+    .property-img img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      max-height: 200px;
+    }
 
-    </style>
+    .property-info {
+      padding: 10px 15px;
+    }
+
+    .property-info p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .property-info h3 {
+      font-size: 18px;
+      margin: 8px 0;
+      color: #003366;
+    }
+
+    .property-info form button {
+      background-color: #003366;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .property-info form button:hover {
+      background-color: #0055aa;
+    }
+
+    footer {
+      background-color: #003366;
+      color: #ccc;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 14px;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        padding: 15px 25px;
+      }
+
+      nav a, nav button {
+        font-size: 13px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Navigation Bar -->
-<nav>
+  <nav>
     <div class="left-nav">
-        <a href="${pageContext.request.contextPath}/LandingPage">Home</a>
-        <a href="${pageContext.request.contextPath}/AddProperty">Add Property</a>
+      <form action="${pageContext.request.contextPath}/property/getAll" method="get" style="display:inline;">
+        <button type="submit" title="Home">
+          <i class="fas fa-house"></i>
+        </button>
+      </form>
+      <a href="${pageContext.request.contextPath}/AddProperty">Add Property</a>
     </div>
     <div class="right-nav">
-        <a href="${pageContext.request.contextPath}/profile">My Profile</a>
+      <a href="${pageContext.request.contextPath}/interest/notification/${sessionScope.user.id}" title="Notifications" style="position: relative;">🔔</a>
+      <a href="${pageContext.request.contextPath}/property/MyProfile">My Profile</a>
     </div>
-</nav>
+  </nav>
 
-<!-- Welcome Message -->
-<div class="welcome">
-    Welcome, ${sessionScope.userName} to DreamHome!
-</div>
+  <!-- 🟡 Property Grid Section -->
+  <div class="property-grid">
+    <c:forEach var="property" items="${sessionScope.properties}">
+      <div class="property-post" onclick="window.location.href='${pageContext.request.contextPath}/property/visit/${property.id}'">
+        
+		<!-- Owner Info -->
+		<div class="property-user" onclick="event.stopPropagation(); window.location.href='${pageContext.request.contextPath}/Owner/property/${property.user.id}'">
+		  <div class="user-avatar">
+		    <img src="${pageContext.request.contextPath}/user/image/${property.user.id}" alt="profile photo" />
+		  </div>
+		  <div class="user-name">
+		    ${property.user.name}
+		  </div>
+		</div>
 
-<!-- Sample Properties -->
-<div class="card-container">
-    <div class="property-card">
-        <img src="https://via.placeholder.com/300x180" alt="Property Image">
-        <div class="property-info">
-            <h3>3 BHK Apartment</h3>
-            <p>Location: New Delhi</p>
-            <p>Price: ₹75 Lakhs</p>
+
+        <!-- Property Image -->
+        <div class="property-img">
+          <img src="${pageContext.request.contextPath}/property/image/${property.id}" alt="Property Image" />
         </div>
-    </div>
 
-    <div class="property-card">
-        <img src="https://via.placeholder.com/300x180" alt="Property Image">
+        <!-- Property Details -->
         <div class="property-info">
-            <h3>2 BHK Flat</h3>
-            <p>Location: Mumbai</p>
-            <p>Price: ₹1.2 Crore</p>
+          <h3>${property.city} - ${property.area}</h3>
+          <p><strong>Type:</strong> ${property.type}</p>
+          <p><strong>Price:</strong> ₹${property.price}</p>
+          <p><strong>About:</strong> ${property.contant}</p>
         </div>
-    </div>
+      </div>
+    </c:forEach>
+  </div>
 
-    <!-- Add more cards dynamically here later -->
-</div>
 
-<!-- Footer -->
-<footer>
+  <footer>
     <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
-</footer>
+  </footer>
 
 </body>
 </html>

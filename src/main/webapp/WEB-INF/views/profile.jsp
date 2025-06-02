@@ -1,163 +1,253 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>My Profile - DreamHome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #eef2f3;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav {
-            background-color: #003366;
-            overflow: hidden;
-            padding: 10px 20px;
-        }
-
-        nav a {
-            float: left;
-            color: white;
-            text-decoration: none;
-            padding: 12px 16px;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            background-color: #0059b3;
-            color: #fff;
-        }
-
-        nav::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .right-nav {
-            float: right;
-        }
-
-        .welcome {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 24px;
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fb;
             color: #003366;
         }
 
-        .card-container {
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            padding: 20px 40px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 30px;
+            justify-content: space-between;
+            background: #003366;
+            color: white;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .profile-card {
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            width: 350px;
-            margin: 15px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            padding: 20px;
+        nav .left-nav, nav .right-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .profile-card h3 {
+        nav a, nav button {
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1.5px solid transparent;
+            background: rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        nav a:hover, nav button:hover {
+            background: white;
+            color: #003366;
+            border-color: #003366;
+        }
+
+        nav form { margin: 0; }
+
+        /* PROFILE LAYOUT */
+        .profile-wrapper {
+            display: flex;
+            max-width: 1100px;
+            margin: 140px auto 40px;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .profile-sidebar {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .profile-sidebar img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #004080;
+            margin-bottom: 15px;
+        }
+
+        .upload-form {
+            margin: 10px 0;
+        }
+
+        .upload-form input[type="file"] {
+            margin-top: 10px;
+        }
+
+        .upload-form input[type="submit"] {
+            margin-top: 8px;
+            background: #003366;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+		
+		
+
+        .profile-sidebar h3 {
+            margin: 15px 0 5px;
             color: #004080;
-            margin-bottom: 10px;
         }
 
-        .profile-card p {
-            margin: 6px 0;
+        .profile-sidebar p {
+            color: #777;
+            font-size: 14px;
+        }
+
+		.profile-content {
+		    flex: 2.5;
+		    overflow-y: auto;
+		    max-height: 100%;
+		}
+        .profile-content h2 {
+            margin-bottom: 20px;
+            color: #004080;
+        }
+
+        .property-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .property-card {
+            display: flex;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        }
+
+        .property-card img {
+            width: 200px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .property-info {
+            flex: 1;
+        }
+
+        .property-info h3 {
+            margin-bottom: 6px;
+            color: #003366;
+        }
+
+        .property-info p {
+            margin: 3px 0;
             color: #333;
         }
 
-        .button {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 14px;
-            background-color: #004080;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
+        .no-properties {
+            color: #777;
+            margin-top: 20px;
         }
 
-        .button:hover {
-            background-color: #0059b3;
-        }
-
+        /* FOOTER */
         footer {
             background-color: #003366;
             color: #ccc;
             text-align: center;
-            padding: 15px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            padding: 20px 0;
+            margin-top: 60px;
+            font-size: 14px;
         }
 
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-wrapper {
+                flex-direction: column;
+            }
+
+            .property-card {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .property-card img {
+                width: 100%;
+                height: auto;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- Navigation Bar -->
+<!-- NAVBAR -->
 <nav>
-    <!-- Left-side links -->
-    <div>
-        <a href="${pageContext.request.contextPath}/LandingPage">Home</a>
+    <div class="left-nav">
+        <form action="${pageContext.request.contextPath}/property/getAll" method="get">
+            <button type="submit" title="Home"><i class="fas fa-house"></i></button>
+        </form>
         <a href="${pageContext.request.contextPath}/AddProperty">Add Property</a>
     </div>
-
-    <!-- Right-side link -->
     <div class="right-nav">
-        <a href="${pageContext.request.contextPath}/profile">My Profile</a>
+        <a href="${pageContext.request.contextPath}/interest/notification/${sessionScope.user.id}" title="Notifications">🔔</a>
+        <a href="${pageContext.request.contextPath}/property/MyProfile">My Profile</a>
     </div>
 </nav>
 
-<!-- Welcome Message -->
-<div class="welcome">
-    Welcome, ${sessionScope.userName} to Your Profile!
+<!-- PROFILE WRAPPER -->
+<div class="profile-wrapper">
+    <!-- Sidebar -->
+    <div class="profile-sidebar">
+        <img src="${pageContext.request.contextPath}/user/image/${user.id}" alt="Profile Photo" />
+        </form>
+        <h3>${sessionScope.user.name}</h3>
+        <p>${sessionScope.user.userName}</p>
+    </div>
+
+    <!-- Properties -->
+    <div class="profile-content">
+        <h2>Your Properties</h2>
+        <c:choose>
+            <c:when test="${not empty properties}">
+                <div class="property-list">
+                    <c:forEach var="property" items="${properties}">
+                        <div class="property-card">
+                            <img src="${pageContext.request.contextPath}/property/image/${property.id}" alt="Property Image">
+                            <div class="property-info">
+                                <h3>${property.city} - ${property.area}</h3>
+                                <p><strong>Price:</strong> ₹${property.price}</p>
+                                <p><strong>Type:</strong> ${property.type}</p>
+                                <p><strong>About:</strong> ${property.contant}</p>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <p class="no-properties">You have not added any properties yet.</p>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </div>
 
-<!-- Profile Details Section -->
-<div class="card-container">
-
-    <!-- Personal Information -->
-    <div class="profile-card">
-        <h3>Your Information</h3>
-        <p><strong>Name:</strong> ${sessionScope.name}</p>
-        <p><strong>Email:</strong> ${sessionScope.email}</p>
-        <p><strong>Username:</strong> ${sessionScope.userName}</p>
-        <a href="${pageContext.request.contextPath}/editProfile" class="button">Edit Profile</a>
-    </div>
-
-    <!-- Posted Properties -->
-    <div class="profile-card">
-        <h3>Your Listings</h3>
-        <p>You have <strong>${sessionScope.listingCount}</strong> active property listings.</p>
-        <a href="${pageContext.request.contextPath}/myProperties" class="button">View My Properties</a>
-    </div>
-
-    <!-- Saved Properties -->
-    <div class="profile-card">
-        <h3>Saved Properties</h3>
-        <p>You have <strong>${sessionScope.savedCount}</strong> saved properties.</p>
-        <a href="${pageContext.request.contextPath}/wishlist" class="button">View Wishlist</a>
-    </div>
-
-    <!-- Change Password -->
-    <div class="profile-card">
-        <h3>Account Security</h3>
-        <a href="${pageContext.request.contextPath}/changePassword" class="button">Change Password</a>
-    </div>
-
-</div>
-
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
     <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
 </footer>

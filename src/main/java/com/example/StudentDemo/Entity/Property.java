@@ -1,11 +1,12 @@
 package com.example.StudentDemo.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Property {
@@ -23,10 +24,12 @@ public class Property {
 	private String contant;
 	@Column
 	private String type;
-	
+	@Lob
+	@Column(name = "image", columnDefinition = "LONGBLOB")
+	private byte[] image;
+
 	@ManyToOne(targetEntity=User.class)
 	private User user;
-
 	
 	public Property(Integer id) {
 		super();
@@ -46,9 +49,15 @@ public class Property {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Property [id=" + id + ", city=" + city + ", price=" + price + ", area=" + area + ", contant=" + contant
+				+ ", type=" + type + ", user=" + user + "]";
+	}
+
+
 	public Property() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -121,6 +130,14 @@ public class Property {
 		this.user = user;
 	}
 
+	public byte[] getImage() {
+		return image;
+	}
+
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
 	
 }

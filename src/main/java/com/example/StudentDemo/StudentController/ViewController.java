@@ -26,7 +26,6 @@ public class ViewController {
 		return "profile";
 	 }
 	
-
 	
 	@GetMapping("/login")
 	public String logInPage() {
@@ -37,5 +36,11 @@ public class ViewController {
 	public String regisPage() {
 		return "regis";
 	}
+	
+	@GetMapping("/notification")
+	public String notification() {
+		return "notification";
+	}
+	
 	
 }

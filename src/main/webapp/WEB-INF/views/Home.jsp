@@ -1,212 +1,335 @@
 <%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Real Estate Home</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0; padding: 0;
-            background-color: #f4f4f4;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DreamHome Real Estate</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
 
-        /* Navigation Bar */
-        nav {
-            background-color: #003366;
-            overflow: hidden;
-        }
+  * {
+    box-sizing: border-box;
+  }
 
-        nav a {
-            float: left;
-            display: block;
-            color: #ddd;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f9fafc;
+    color: #222;
+  }
 
-        nav a:hover {
-            background-color: #0059b3;
-            color: white;
-        }
+  /* NAVIGATION BAR */
+  nav {
+    position: fixed;
+    width: 100%;
+    top: 0; left: 0;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: transparent;
+    z-index: 1000;
+  }
 
-        /* Hero Section */
-        .hero-image {
-            position: relative;
-            background-image: url('images/image1.png');
-            height: 400px;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
+  nav a.home-link {
+    color: #fff;
+    font-weight: 800;
+    font-size: 22px;
+    text-decoration: none;
+    letter-spacing: 2px;
+    user-select: none;
+    margin-right: auto;
+  }
 
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 1;
-        }
+  /* Login/Register Buttons on top right over hero */
+  .auth-buttons {
+    display: flex;
+    gap: 15px;
+  }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
+  .auth-buttons a {
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 10px 26px;
+    border-radius: 30px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgb(0 120 212 / 0.3);
+  }
 
-        .hero-content h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-        }
+  .auth-buttons a.login {
+    background: rgba(255 255 255 / 0.3);
+    color: white;
+    border: 1.5px solid white;
+    backdrop-filter: blur(8px);
+  }
 
-        .btn-group {
-            margin-top: 20px;
-        }
+  .auth-buttons a.login:hover {
+    background: white;
+    color: #0078d4;
+    border-color: #0078d4;
+    box-shadow: 0 8px 30px rgb(0 120 212 / 0.5);
+  }
 
-        .btn {
-            background-color: #004080;
-            color: white;
-            padding: 12px 28px;
-            margin: 0 10px;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: inline-block;
-        }
+  .auth-buttons a.register {
+	background: rgba(255 255 255 / 0.3);
+	   color: white;
+	   border: 1.5px solid white;
+	   backdrop-filter: blur(8px);
+  }
+  .auth-buttons a.register:hover {
+      background: white;
+      color: #0078d4;
+      border-color: #0078d4;
+      box-shadow: 0 8px 30px rgb(0 120 212 / 0.5);
+  }
 
-        .btn:hover {
-            background-color: #0066cc;
-        }
+  /* HERO SECTION WITH SLIDER */
+  .hero {
+    position: relative;
+    height: 550px;
+    width: 100vw;
+    overflow: hidden;
+  }
 
-        /* Container and Property Cards */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
+  .hero-slide {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-position: center;
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+  }
 
-        h2 {
-            color: #004080;
-            margin-bottom: 15px;
-        }
+  .hero-slide.active {
+    opacity: 1;
+    z-index: 1;
+  }
 
-        .property-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 120, 212, 0.75), rgba(0, 70, 140, 0.9));
+    z-index: 2;
+  }
 
-        .property-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            width: 30%;
-            overflow: hidden;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    color: #f0f6fc;
+    user-select: none;
+  }
 
-        .property-card:hover {
-            transform: scale(1.03);
-        }
+  .hero-content h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    text-shadow: 3px 3px 20px rgba(0,0,0,0.5);
+  }
 
-        .property-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
+  .hero-content p {
+    font-weight: 400;
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    letter-spacing: 0.6px;
+    text-shadow: 1px 1px 10px rgba(0,0,0,0.4);
+  }
 
-        .property-details {
-            padding: 15px;
-        }
+  /* CONTAINER AND PROPERTIES */
+  main.container {
+    max-width: 1150px;
+    margin: 80px auto 60px;
+    padding: 0 25px;
+  }
 
-        .property-details h3 {
-            margin: 0 0 10px 0;
-            color: #003366;
-        }
+  main.container h2 {
+    font-weight: 700;
+    font-size: 2.7rem;
+    color: #003366;
+    border-left: 8px solid #0078d4;
+    padding-left: 12px;
+    margin-bottom: 30px;
+    user-select: none;
+  }
 
-        .property-details p {
-            margin: 5px 0;
-            color: #555;
-        }
+  .property-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+  }
 
-        /* Footer */
-        footer {
-            background-color: #003366;
-            color: #ccc;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 40px;
-        }
-    </style>
+  .property-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 14px 28px rgb(0 0 0 / 0.12);
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+  }
+
+  .property-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgb(0 0 0 / 0.18);
+  }
+
+  .property-image {
+    position: relative;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+  }
+
+  .property-card:hover .property-image {
+    transform: scale(1.05);
+  }
+
+  .property-details {
+    padding: 20px 22px 26px;
+  }
+
+  .property-details h3 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #004080;
+    margin-bottom: 10px;
+    user-select: none;
+  }
+
+  .property-details p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+  }
+
+  .property-details p.price {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #0078d4;
+    margin-top: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    font-size: 14px;
+    padding: 30px 15px;
+    color: #666;
+    background: #f2f5f9;
+    user-select: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .hero-content h1 {
+      font-size: 2.8rem;
+    }
+
+    .hero-content p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 450px) {
+    nav {
+      padding: 12px 20px;
+    }
+
+    .auth-buttons a {
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+  }
+</style>
+<script>
+  // Simple hero slider cycling images every 5 seconds
+  window.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentIndex = 0;
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+    showSlide(currentIndex);
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }, 5000);
+  });
+</script>
 </head>
 <body>
 
-<!-- Navigation Menu (Home Only) -->
 <nav>
-    <a href="${pageContext.request.contextPath}/home" class="btn">Home</a>
+  <a href="${pageContext.request.contextPath}/home" class="home-link">DreamHome</a>
+  <div class="auth-buttons">
+    <a href="${pageContext.request.contextPath}/login" class="login">Login</a>
+    <a href="${pageContext.request.contextPath}/registration" class="register">Register</a>
+  </div>
 </nav>
 
-<!-- Hero Section with Login/Register -->
-<div class="hero-image">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1>Welcome to Real Estate</h1>
-        <div class="btn-group">
-			<a href="${pageContext.request.contextPath}/login" class="btn">Login</a>
-			<a href="${pageContext.request.contextPath}/registration" class="btn">Register</a>
-        </div>
+<section class="hero">
+  <div class="hero-slide" style="background-image: url('images/image1.png');"></div>
+  <div class="hero-slide" style="background-image: url('images/images2.png');"></div>
+  <div class="hero-slide" style="background-image: url('images/images3.png');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Your Dream Home Awaits</h1>
+    <p>Explore exclusive properties, find your perfect match, and live the lifestyle you deserve.</p>
+  </div>
+</section>
+
+<main class="container">
+  <h2>Featured Properties</h2>
+  <div class="property-list">
+    <div class="property-card">
+      <div class="property-image" style="background-image: url('images/luxury_villa.png');"></div>
+      <div class="property-details">
+        <h3>Luxury Villa</h3>
+        <p>4 Beds • 3 Baths • 3500 sqft</p>
+        <p>Location: Beverly Hills, CA</p>
+        <p class="price">$1,200,000</p>
+      </div>
     </div>
-</div>
 
-<!-- Main Content: Featured Properties -->
-<div class="container">
-    <h2>Featured Properties</h2>
-    <div class="property-list">
-        <div class="property-card">
-            <img src="images/luxury_villa.png" alt="Luxury Villa" />
-            <div class="property-details">
-                <h3>Luxury Villa</h3>
-                <p>4 Beds • 3 Baths • 3500 sqft</p>
-                <p>Location: Beverly Hills, CA</p>
-                <p><strong>$1,200,000</strong></p>
-            </div>
-        </div>
-
-        <div class="property-card">
-            <img src="images/cozy_cottage.png" alt="Cozy Cottage" />
-            <div class="property-details">
-                <h3>Cozy Cottage</h3>
-                <p>3 Beds • 2 Baths • 1500 sqft</p>
-                <p>Location: Austin, TX</p>
-                <p><strong>$560,000</strong></p>
-            </div>
-        </div>
-
-        <div class="property-card">
-            <img src="images/Modern_Apartment.png" alt="Modern Apartment" />
-            <div class="property-details">
-                <h3>Modern Apartment</h3>
-                <p>2 Beds • 2 Baths • 1200 sqft</p>
-                <p>Location: New York, NY</p>
-                <p><strong>$850,000</strong></p>
-            </div>
-        </div>
+    <div class="property-card">
+      <div class="property-image" style="background-image: url('images/cozy_cottage.png');"></div>
+      <div class="property-details">
+        <h3>Cozy Cottage</h3>
+        <p>3 Beds • 2 Baths • 1500 sqft</p>
+        <p>Location: Austin, TX</p>
+        <p class="price">$560,000</p>
+      </div>
     </div>
-</div>
 
-<!-- Footer -->
+    <div class="property-card">
+      <div class="property-image" style="background-image: url('images/Modern_Apartment.png');"></div>
+      <div class="property-details">
+        <h3>Modern Apartment</h3>
+        <p>2 Beds • 2 Baths • 1200 sqft</p>
+        <p>Location: New York, NY</p>
+        <p class="price">$850,000</p>
+      </div>
+    </div>
+  </div>
+</main>
+
 <footer>
-    <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
+  <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
 </footer>
 
 </body>

@@ -1,7 +1,5 @@
 package com.example.StudentDemo.StudentServiceImpl;
 
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +20,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean getUser(User user) {
-	    List<User> users = userRepo.findByUserNameAndPassword(user.getUserName(), user.getPassword());
-	    return !users.isEmpty();
+	public User getUser(User user) {
+	    User user1=userRepo.findByUserName(user.getUserName());
+	    return user1;
 	}
 
+	@Override
+	public User findById(Integer id) {
+		return userRepo.findById(id).orElse(null);
+	}
 
-	
-	
 }
