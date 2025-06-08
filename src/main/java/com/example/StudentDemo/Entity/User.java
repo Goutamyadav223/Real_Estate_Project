@@ -1,5 +1,7 @@
 package com.example.StudentDemo.Entity;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +25,9 @@ public class User {
 	@Column(unique = true) 
 	private String userName;
 	
+	@Column
+	private String mail; 
+	
 	@Lob
 	@Column(name="image" , columnDefinition="LONGBLOB")
 	private byte[] image;
@@ -33,20 +38,27 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(Integer id, String name, String password, String userName) {
+	
+
+
+
+	public User(Integer id, String name, String password, String userName, String mail, byte[] image) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.userName = userName;
+		this.mail = mail;
+		this.image = image;
 	}
-
 
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password + ", userName=" + userName + "]";
+		return "User [id=" + id + ", name=" + name + ", password=" + password + ", userName=" + userName + ", mail="
+				+ mail + ", image=" + Arrays.toString(image) + "]";
 	}
+
 
 	public Integer getId() {
 		return id;
@@ -86,6 +98,14 @@ public class User {
 
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
 		

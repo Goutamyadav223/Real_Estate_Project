@@ -11,5 +11,6 @@ public interface UserService {
 	public void createUser(User user);
 	public User getUser(User user);
 	public User findById(Integer id);
+	public User findByUserName(String userName);
 
 }

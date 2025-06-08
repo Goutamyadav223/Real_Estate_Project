@@ -42,5 +42,14 @@ public class ViewController {
 		return "notification";
 	}
 	
+	@GetMapping("/logout")
+	public String logout() {
+		return "Home";
+	}
+	
+	 @GetMapping("/regis")
+	   public String showRegistrationPage() {
+	       return "regis"; // regis.jsp
+	 }
 	
 }

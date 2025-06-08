@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.StudentDemo.Entity.User;
 import com.example.StudentDemo.StudentService.UserService;
@@ -30,17 +31,23 @@ public class UserController {
 	
 	
 	@PostMapping("/create")
-	public String createUser(@ModelAttribute User user,@RequestParam("imageFile") MultipartFile file)throws IOException {
-		user.setImage(file.getBytes());
-		userService.createUser(user);
-		return "login";
+	public String createUser(@ModelAttribute User user,@RequestParam("imageFile") MultipartFile file ,  RedirectAttributes redirectAttributes)throws IOException {
+		
+		User u1=userService.findByUserName(user.getUserName());
+			
+		if(u1==null) {	
+			user.setImage(file.getBytes());
+			userService.createUser(user);
+			return "login";
+		}
+		 redirectAttributes.addFlashAttribute("Notsuccess", "Already Registered!");
+		return "redirect:/regis";
 	}
 
 	@PostMapping("/login")
 	public String getUser(@ModelAttribute User user, Model model, HttpSession session) {
 		User user1 = userService.getUser(user);
 		if(user1!=null){
-			System.out.println(user1);
 			if((user1.getPassword()).equals(user.getPassword())) {	
             session.setAttribute("user", user1);
         	return "redirect:/property/getAll";
@@ -64,5 +71,8 @@ public class UserController {
 		}
 	}
 	
-
 }
+
+	
+
+

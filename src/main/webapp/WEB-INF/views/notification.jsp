@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,7 +134,18 @@
       .page-container {
         padding: 100px 15px 40px;
       }
-    }
+    } 
+	  .nav-profile {
+	  display: flex;
+	  align-items: center;
+	  cursor: pointer;
+	}
+
+	.nav-profile .user-avatar img {
+	  width: 40px;
+	  height: 40px;
+	  border-radius: 50%;
+	}
   </style>
 </head>
 <body>
@@ -145,11 +157,15 @@
 	         <i class="fas fa-house"></i>
 	       </button>
 	     </form>
-    <a href="${pageContext.request.contextPath}/AddProperty">Add Property</a>
   </div>
   <div class="right-nav">
     <a href="${pageContext.request.contextPath}/interest/notification/${sessionScope.user.id}" title="Notifications" style="position: relative;">🔔</a>
-    <a href="${pageContext.request.contextPath}/property/MyProfile">My Profile</a>
+	<div class="nav-profile" onclick="event.stopPropagation(); window.location.href='${pageContext.request.contextPath}/property/MyProfile'">	
+			        <div class="user-avatar">
+			          <img src="${pageContext.request.contextPath}/user/image/${sessionScope.user.id}" alt="profile photo" />
+			        </div>
+			      </div>
+				  
   </div>
 </nav>
 
@@ -158,14 +174,14 @@
   <div class="notifications-container">
     <c:choose>
       <c:when test="${not empty notifications}">
-        <c:forEach var="notification" items="${notifications}">
-          <div class="notification-card">
-            <div class="notification-info">
-              <p><strong>Message:</strong>${notification.message}</p>
-              <p><strong>Time:</strong> ${notification.timestamp}</p>
-            </div>
-          </div>
-        </c:forEach>
+		<c:forEach var="notification" items="${notifications}">
+		  <div class="notification-card">
+		    <div class="notification-info">
+		      <p><strong>From:</strong> ${notification.senderUser.name}</p>
+		      <p><strong>Message:</strong> ${notification.message}</p>
+		    </div>
+		  </div>
+		</c:forEach>
       </c:when>
       <c:otherwise>
         <p style="text-align:center; color: #777;">No notifications found.</p>
@@ -177,6 +193,7 @@
 <footer>
   <p>&copy; 2025 DreamHome Real Estate. All rights reserved.</p>
 </footer>
+
 
 </body>
 </html>

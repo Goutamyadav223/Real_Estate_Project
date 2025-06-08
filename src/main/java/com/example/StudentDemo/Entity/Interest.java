@@ -1,108 +1,95 @@
 package com.example.StudentDemo.Entity;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 @Entity
 public class Interest {
 
-	   @Id
-	   @GeneratedValue(strategy = GenerationType.IDENTITY)
-	   private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	    private Long propertyId;
+    private String message;
 
-	    @Column
-	    private Long senderUserId;
+    @ManyToOne
+    @JoinColumn(name = "sender_user_id")
+    private User senderUser;
 
-	    @Column
-	    private Long receiverUserId;
+    @ManyToOne
+    @JoinColumn(name = "receiver_user_id")
+    private User receiverUser;
 
-	    @Column
-	    private String message;
+    @ManyToOne
+    @JoinColumn(name = "property_id")
+    private Property property;
 
-	    @Column
-	    private LocalDateTime timestamp;
+    
+    
+    
+    
+    
+    
+	public Interest() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-	    
-	    
-	    
-	    
-		public Interest() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
+	@Override
+	public String toString() {
+		return "Interest [id=" + id + ", message=" + message + ", senderUser=" + senderUser + ", receiverUser="
+				+ receiverUser + ", property=" + property + "]";
+	}
 
-		public Interest(Long id, Long propertyId, Long senderUserId, Long receiverUserId, String message,
-				LocalDateTime timestamp) {
-			super();
-			this.id = id;
-			this.propertyId = propertyId;
-			this.senderUserId = senderUserId;
-			this.receiverUserId = receiverUserId;
-			this.message = message;
-			this.timestamp = timestamp;
-		}
+	public Interest(Integer id, String message, User senderUser, User receiverUser, Property property) {
+		super();
+		this.id = id;
+		this.message = message;
+		this.senderUser = senderUser;
+		this.receiverUser = receiverUser;
+		this.property = property;
+	}
 
-		@Override
-		public String toString() {
-			return "Interest [id=" + id + ", propertyId=" + propertyId + ", senderUserId=" + senderUserId
-					+ ", receiverUserId=" + receiverUserId + ", message=" + message + ", timestamp=" + timestamp + "]";
-		}
+	public Integer getId() {
+		return id;
+	}
 
-		public Long getId() {
-			return id;
-		}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-		public void setId(Long id) {
-			this.id = id;
-		}
+	public String getMessage() {
+		return message;
+	}
 
-		public Long getPropertyId() {
-			return propertyId;
-		}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-		public void setPropertyId(Long propertyId) {
-			this.propertyId = propertyId;
-		}
+	public User getSenderUser() {
+		return senderUser;
+	}
 
-		public Long getSenderUserId() {
-			return senderUserId;
-		}
+	public void setSenderUser(User senderUser) {
+		this.senderUser = senderUser;
+	}
 
-		public void setSenderUserId(Long senderUserId) {
-			this.senderUserId = senderUserId;
-		}
+	public User getReceiverUser() {
+		return receiverUser;
+	}
 
-		public Long getReceiverUserId() {
-			return receiverUserId;
-		}
+	public void setReceiverUser(User receiverUser) {
+		this.receiverUser = receiverUser;
+	}
 
-		public void setReceiverUserId(Long receiverUserId) {
-			this.receiverUserId = receiverUserId;
-		}
+	public Property getProperty() {
+		return property;
+	}
 
-		public String getMessage() {
-			return message;
-		}
-
-		public void setMessage(String message) {
-			this.message = message;
-		}
-
-		public LocalDateTime getTimestamp() {
-			return timestamp;
-		}
-
-		public void setTimestamp(LocalDateTime timestamp) {
-			this.timestamp = timestamp;
-		}
-	   
-	    
-	    
+	public void setProperty(Property property) {
+		this.property = property;
+	}
 }

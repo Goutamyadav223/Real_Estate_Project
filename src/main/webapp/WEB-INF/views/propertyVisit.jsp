@@ -166,7 +166,18 @@
             height: 45px;
             border-radius: 50%;
             object-fit: cover;
-        }
+ 		} 
+		  .nav-profile {
+		  display: flex;
+		  align-items: center;
+		  cursor: pointer;
+		}
+
+		.nav-profile .user-avatar img {
+		  width: 40px;
+		  height: 40px;
+		  border-radius: 50%;
+		}
     </style>
 </head>
 <body>
@@ -179,11 +190,14 @@
                 <i class="fas fa-house"></i>
             </button>
         </form>
-        <a href="${pageContext.request.contextPath}/AddProperty">Add Property</a>
         </div>
     <div class="right-nav">
         <a href="${pageContext.request.contextPath}/interest/notification/${sessionScope.user.id}" title="Notifications" style="position: relative;">🔔</a>
-        <a href="${pageContext.request.contextPath}/property/MyProfile">My Profile</a>
+		<div class="nav-profile" onclick="event.stopPropagation(); window.location.href='${pageContext.request.contextPath}/property/MyProfile'">	
+				        <div class="user-avatar">
+				          <img src="${pageContext.request.contextPath}/user/image/${sessionScope.user.id}" alt="profile photo" />
+				        </div>
+				      </div>
     </div>
 </nav>
 
@@ -214,7 +228,6 @@
                 <input type="hidden" name="senderUserId" value="${sessionScope.user.id}">
                 <input type="hidden" name="receiverUserId" value="${property.user.id}">
                 <textarea name="message" placeholder="Write a short message"></textarea>
-                <input type="hidden" id="interestTime" name="interestTime">
                 <button type="submit" class="btn-contact">Interested</button>
             </form>
         </div>

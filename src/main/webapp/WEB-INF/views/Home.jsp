@@ -30,6 +30,7 @@
     align-items: center;
     background: transparent;
     z-index: 1000;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
   }
 
   nav a.home-link {
@@ -40,9 +41,9 @@
     letter-spacing: 2px;
     user-select: none;
     margin-right: auto;
+    transition: color 0.4s ease;
   }
 
-  /* Login/Register Buttons on top right over hero */
   .auth-buttons {
     display: flex;
     gap: 15px;
@@ -59,31 +60,44 @@
     box-shadow: 0 4px 15px rgb(0 120 212 / 0.3);
   }
 
-  .auth-buttons a.login {
+  .auth-buttons a.login,
+  .auth-buttons a.register {
     background: rgba(255 255 255 / 0.3);
     color: white;
     border: 1.5px solid white;
     backdrop-filter: blur(8px);
   }
 
-  .auth-buttons a.login:hover {
+  .auth-buttons a.login:hover,
+  .auth-buttons a.register:hover {
     background: white;
     color: #0078d4;
     border-color: #0078d4;
     box-shadow: 0 8px 30px rgb(0 120 212 / 0.5);
   }
 
-  .auth-buttons a.register {
-	background: rgba(255 255 255 / 0.3);
-	   color: white;
-	   border: 1.5px solid white;
-	   backdrop-filter: blur(8px);
+  /* Scroll effect nav */
+  nav.scrolled {
+    background: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   }
-  .auth-buttons a.register:hover {
-      background: white;
-      color: #0078d4;
-      border-color: #0078d4;
-      box-shadow: 0 8px 30px rgb(0 120 212 / 0.5);
+
+  nav.scrolled a.home-link {
+    color: #0078d4;
+  }
+
+  nav.scrolled .auth-buttons a.login,
+  nav.scrolled .auth-buttons a.register {
+    background: #0078d4;
+    color: white;
+    border-color: #0078d4;
+  }
+
+  nav.scrolled .auth-buttons a.login:hover,
+  nav.scrolled .auth-buttons a.register:hover {
+    background: #005fa3;
+    color: #fff;
+    box-shadow: 0 8px 30px rgb(0 120 212 / 0.5);
   }
 
   /* HERO SECTION WITH SLIDER */
@@ -148,7 +162,6 @@
     text-shadow: 1px 1px 10px rgba(0,0,0,0.4);
   }
 
-  /* CONTAINER AND PROPERTIES */
   main.container {
     max-width: 1150px;
     margin: 80px auto 60px;
@@ -222,7 +235,6 @@
     margin-top: 12px;
   }
 
-  /* FOOTER */
   footer {
     text-align: center;
     font-size: 14px;
@@ -232,7 +244,6 @@
     user-select: none;
   }
 
-  /* RESPONSIVE */
   @media (max-width: 700px) {
     .hero-content h1 {
       font-size: 2.8rem;
@@ -255,7 +266,6 @@
   }
 </style>
 <script>
-  // Simple hero slider cycling images every 5 seconds
   window.addEventListener('DOMContentLoaded', () => {
     const slides = document.querySelectorAll('.hero-slide');
     let currentIndex = 0;
@@ -269,6 +279,16 @@
       currentIndex = (currentIndex + 1) % slides.length;
       showSlide(currentIndex);
     }, 5000);
+  });
+
+  // Scroll-based nav effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
   });
 </script>
 </head>

@@ -13,11 +13,10 @@ import com.example.StudentDemo.dto.InterestDTO;
 public interface InterestService {
 
 
+	public List<Interest> getNotificationsForUser(Integer id);
+	
 	public void interestedUser(InterestDTO dto);
-	
-	Interest findByPropertyIdAndUsers(Long propertyId, Long senderUserId, Long receiverUserId);
 
-	public List<Interest> getNotificationsForUser(Long id);
+	public Interest findByPropertyIdAndUsers(Integer propertyId, Integer senderUserId, Integer receiverUserId);
 
-	
 }

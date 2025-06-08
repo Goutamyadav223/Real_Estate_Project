@@ -208,6 +208,17 @@
                 height: auto;
             }
         }
+		  .nav-profile {
+		  display: flex;
+		  align-items: center;
+		  cursor: pointer;
+		}
+
+		.nav-profile .user-avatar img {
+		  width: 40px;
+		  height: 40px;
+		  border-radius: 50%;
+		}
     </style>
 </head>
 <body>
@@ -218,11 +229,15 @@
         <form action="${pageContext.request.contextPath}/property/getAll" method="get">
             <button type="submit" title="Home"><i class="fas fa-house"></i></button>
         </form>
-        <a href="${pageContext.request.contextPath}/AddProperty">Add Property</a>
       </div>
     <div class="right-nav">
         <a href="${pageContext.request.contextPath}/interest/notification/${sessionScope.user.id}" title="Notifications">🔔</a>
-        <a href="${pageContext.request.contextPath}/property/MyProfile">My Profile</a>
+		<div class="nav-profile" onclick="event.stopPropagation(); window.location.href='${pageContext.request.contextPath}/property/MyProfile'">	
+				        <div class="user-avatar">
+				          <img src="${pageContext.request.contextPath}/user/image/${sessionScope.user.id}" alt="profile photo" />
+				        </div>
+				      </div>
+					  
     </div>
 </nav>
 
@@ -254,7 +269,7 @@
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <img src="${pageContext.request.contextPath}/user/image/${property.user.id}" alt="User Image"
                                      style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #004080;" />
-                                <strong>${sessionScope.user.name}</strong>
+                                <strong>${owner.name}</strong>
                             </div>
                             <h3>${property.city} - ${property.area}</h3>
                             <p><strong>Price:</strong> ₹${property.price}</p>

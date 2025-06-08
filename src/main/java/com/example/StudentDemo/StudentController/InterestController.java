@@ -37,12 +37,12 @@ public class InterestController {
 	}
 
 	@GetMapping("/notification/{id}")
-	public String showNotifications(@PathVariable("id") Long id ,Model model, HttpSession session) {
-	
+	public String showNotifications(@PathVariable("id") Integer id ,Model model, HttpSession session) {
 	    List<Interest> notifications = interestService.getNotificationsForUser(id);
 	    model.addAttribute("notifications", notifications);
 	    return "notification"; 
 	}
+
 	
 	
 }
